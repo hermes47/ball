@@ -1,16 +1,7 @@
 PROJECT(BALLAXY)
 
-IF(NOT BALL_HAS_VIEW)
-	MESSAGE(STATUS "BALL is configured to not build the VIEW components. Disabling the BALLaxy plugin.")
-	RETURN()
-ENDIF()
-
-IF(NOT USE_QTWEBENGINE OR NOT Qt5WebEngine_FOUND)
-	MESSAGE(STATUS "QtWebEngine support has not been enabled. Disabling the BALLaxy plugin")
-	RETURN()
-ENDIF()
-
 SET(DIRECTORY source)
+
 ### list all filenames of the directory here ###
 SET(UI_SOURCES_LIST
 	${DIRECTORY}/BALLaxyInterfacePreferences.ui
