@@ -55,8 +55,13 @@ class Molecule
 
   SIP_PYOBJECT __repr__();
 %MethodCode
+#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(String(String("Molecule ") + sipCpp->getName() 
 						+ " { " + String(sipCpp->countAtoms()) + " atoms }").c_str());
+#else
+	sipRes = PyUnicode_FromString(String(String("Molecule ") + sipCpp->getName() 
+						+ " { " + String(sipCpp->countAtoms()) + " atoms }").c_str());
+#endif
 %End
 
 };

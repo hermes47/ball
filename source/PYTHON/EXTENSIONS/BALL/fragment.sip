@@ -31,7 +31,12 @@ class Fragment
 
   SIP_PYOBJECT __str__();
 %MethodCode
+#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(String(String("Fragment ") + sipCpp->getName()
     			    + " { " + String(sipCpp->countAtoms()) + " atoms }").c_str());
+#else
+	sipRes = PyUnicode_FromString(String(String("Fragment ") + sipCpp->getName()
+    			    + " { " + String(sipCpp->countAtoms()) + " atoms }").c_str());
+#endif
 %End
 };

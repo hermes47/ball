@@ -14,11 +14,21 @@ class AtomType
 	public:
 %ConvertToTypeCode
 	if (sipIsErr == NULL)
+#if PY_MAJOR_VERSION < 3
 		return PyInt_Check(sipPy) || BALL_CAN_CONVERT_TO_INSTANCE(sipPy, Atom);
 
 	if (PyInt_Check(sipPy))
+#else
+		return PyLong_Check(sipPy) || BALL_CAN_CONVERT_TO_INSTANCE(sipPy, Atom);
+
+	if (PyLong_Check(sipPy))
+#endif
 	{
+#if PY_MAJOR_VERSION < 3
 		*sipCppPtr = new AtomType(PyInt_AS_LONG(sipPy));
+#else
+		*sipCppPtr = new AtomType(PyLong_AS_LONG(sipPy));
+#endif
 	
 		return 1;
 	}
@@ -30,12 +40,20 @@ class AtomType
 
 	SIP_PYOBJECT __str__();
 %MethodCode
+#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(String(*sipCpp).c_str());
+#else
+	sipRes = PyUnicode_FromString(String(*sipCpp).c_str());
+#endif
 %End
 
 	SIP_PYOBJECT __repr__();
 %MethodCode
+#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(String(*sipCpp).c_str());
+#else
+	sipRes = PyUnicode_FromString(String(*sipCpp).c_str());
+#endif
 %End
 };
 
@@ -176,18 +194,32 @@ class Atom
 	// convert the atom to a string representation
 	SIP_PYOBJECT __str__();
 %MethodCode
+#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(String(String("Atom ") + sipCpp->getName() 
 						+ " { " + sipCpp->getElement().getSymbol() + " @ (" 
 						+ String(sipCpp->getPosition().x) + " " + String(sipCpp->getPosition().y) + " " 
 						+ String(sipCpp->getPosition().z) + ") }").c_str());
+#else
+	sipRes = PyUnicode_FromString(String(String("Atom ") + sipCpp->getName() 
+						+ " { " + sipCpp->getElement().getSymbol() + " @ (" 
+						+ String(sipCpp->getPosition().x) + " " + String(sipCpp->getPosition().y) + " " 
+						+ String(sipCpp->getPosition().z) + ") }").c_str());
+#endif
 %End
 
 	SIP_PYOBJECT __repr__();
 %MethodCode
+#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(String(String("Atom ") + sipCpp->getName() 
 						+ " { " + sipCpp->getElement().getSymbol() + " @ (" 
 						+ String(sipCpp->getPosition().x) + " " + String(sipCpp->getPosition().y) + " " 
 						+ String(sipCpp->getPosition().z) + " }").c_str());
+#else
+	sipRes = PyUnicode_FromString(String(String("Atom ") + sipCpp->getName() 
+						+ " { " + sipCpp->getElement().getSymbol() + " @ (" 
+						+ String(sipCpp->getPosition().x) + " " + String(sipCpp->getPosition().y) + " " 
+						+ String(sipCpp->getPosition().z) + " }").c_str());
+#endif
 %End
 
 

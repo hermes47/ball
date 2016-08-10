@@ -115,6 +115,10 @@ class Bond
 		}
 		tmp += " }";
 	}
+#if PY_MAJOR_VERSION < 3
 	return PyString_FromString(tmp.c_str());
+#else
+	return PyUnicode_FromString(tmp.c_str());
+#endif
 %End
 };

@@ -39,7 +39,11 @@ class PreciseTime
 	String usec_str(sipCpp->getMicroSeconds() / 1.0e6);
 	time_str.append(usec_str.after("."));
 
+#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(time_str.c_str());
+#else
+	sipRes = PyUnicode_FromString(time_str.c_str());
+#endif
 %End
 };
 
@@ -72,7 +76,11 @@ class TimeStamp
 	String usec_str(sipCpp->getTime().getMicroSeconds() / 1.0e6);
 	time_str.append(usec_str.after("."));
 
+#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(time_str.c_str());
+#else
+	sipRes = PyUnicode_FromString(time_str.c_str());
+#endif
 %End
 };
 

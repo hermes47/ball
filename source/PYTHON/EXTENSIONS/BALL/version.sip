@@ -26,6 +26,10 @@ class VersionInfo
 	// __str__ method: just call getVersion
 	SIP_PYOBJECT __str__();
 %MethodCode
+#if PY_MAJOR_VERSION < 3
   return PyString_FromString(VersionInfo::getVersion());  	
+#else
+  return PyUnicode_FromString(VersionInfo::getVersion());  	
+#endif
 %End 
 };

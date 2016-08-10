@@ -94,6 +94,10 @@ class Vector2
 	tmp = "(";
 	tmp += String(sipCpp->x) + " ";
 	tmp += String(sipCpp->y) + ")";
+#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(tmp.c_str());
+#else
+	sipRes = PyUnicode_FromString(tmp.c_str());
+#endif
 %End
 };

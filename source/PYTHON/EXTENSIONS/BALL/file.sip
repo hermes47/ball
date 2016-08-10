@@ -114,16 +114,28 @@ class OpenMode
 		case (int)std::ios::in: 		mode_string = "std::ios::in"; break; 
 		default:										mode_string = "";
 	}
+#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(mode_string);
+#else
+	sipRes = PyUnicode_FromString(mode_string);
+#endif
 %End
 
 %ConvertToTypeCode
   if (sipIsErr == NULL)
+#if PY_MAJOR_VERSION < 3
     return (PyInt_Check(sipPy) || BALL_IS_SUBCLASS_INSTANCE(sipPy, OpenMode));
 
 	if (PyInt_Check(sipPy))
   {
 		int mode = PyInt_AS_LONG(sipPy);
+#else
+    return (PyLong_Check(sipPy) || BALL_IS_SUBCLASS_INSTANCE(sipPy, OpenMode));
+
+	if (PyLong_Check(sipPy))
+  {
+		int mode = PyLong_AS_LONG(sipPy);
+#endif
 		File::OpenMode result;
 		switch (mode)
 		{

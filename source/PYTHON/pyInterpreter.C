@@ -230,8 +230,11 @@ namespace BALL
 			return 0;
 		}
 
+#if PY_MAJOR_VERSION < 3
 		PyObject* mod_name = PyString_FromString(name.toLatin1().data());
-
+#else
+		PyObject* mod_name = PyUnicode_FromString(name.toLatin1().data());
+#endif
 		PyObject* module = 0;
 
 		if(PyDict_Contains(module_dict, mod_name))
@@ -289,9 +292,11 @@ namespace BALL
 			{
 				continue;
 			}
-
+#if PY_MAJOR_VERSION < 3
 			PyObject* val = PyString_FromString(it->second.toLatin1().data());
-
+#else
+			PyObject* val = PyUnicode_FromString(it->second.toLatin1().data());
+#endif
 			if(!val)
 			{
 				Log.error() << "Could not create parameter" << it->first.toStdString() << "=" << it->second.toStdString() << " Skipping." << std::endl;

@@ -65,9 +65,16 @@ class PDBAtom
 	//  virtual void write(ostream& s) const;
   SIP_PYOBJECT __str__();
 %MethodCode
+#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(String(String("PDBAtom ") + sipCpp->getName()
         + " { " + sipCpp->getElement().getSymbol() + " @ ("
         + String(sipCpp->getPosition().x) + " " + String(sipCpp->getPosition().y) + " "
         + String(sipCpp->getPosition().z) + " }").c_str());
+#else
+	sipRes = PyUnicode_FromString(String(String("PDBAtom ") + sipCpp->getName()
+        + " { " + sipCpp->getElement().getSymbol() + " @ ("
+        + String(sipCpp->getPosition().x) + " " + String(sipCpp->getPosition().y) + " "
+        + String(sipCpp->getPosition().z) + " }").c_str());
+#endif
 %End
 };

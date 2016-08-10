@@ -114,6 +114,8 @@ class String
 		throw(NullPointer, IndexOverflow, IndexUnderflow);
   String(const char*, Index, Size) 
 		throw(NullPointer, IndexOverflow, IndexUnderflow);
+  String(const wchar_t*, Index, Size) 
+		throw(NullPointer, IndexOverflow, IndexUnderflow);
 
   // String(Size buffer_size, const char* format, ... );
   // String(std::strstream& s);
@@ -266,11 +268,19 @@ class String
 %MethodCode
 	if (sipCpp == 0)
 	{
+#if PY_MAJOR_VERSION < 3
 		sipRes = PyString_FromString("");
+#else
+		sipRes = PyUnicode_FromString("");
+#endif
 	}
 	else
 	{
+#if PY_MAJOR_VERSION < 3
 		sipRes = PyString_FromString(sipCpp->c_str());
+#else
+		sipRes = PyUnicode_FromString(sipCpp->c_str());
+#endif
 	}
 %End
 
@@ -278,17 +288,29 @@ SIP_PYOBJECT __repr__();
 %MethodCode
 	if (sipCpp == 0)
 	{
+#if PY_MAJOR_VERSION < 3
 		sipRes = PyString_FromString("");
+#else
+		sipRes = PyUnicode_FromString("");
+#endif
 	}
 	else
 	{
+#if PY_MAJOR_VERSION < 3
 		sipRes = PyString_FromString(sipCpp->c_str());
+#else
+		sipRes = PyUnicode_FromString(sipCpp->c_str());
+#endif
 	}
 %End
 
 %ConvertToTypeCode
   if (sipIsErr == NULL)
+#if PY_MAJOR_VERSION < 3
     return (PyString_Check(sipPy) || BALL_IS_SUBCLASS_INSTANCE(sipPy, String));
+#else
+    return (PyUnicode_Check(sipPy) || BALL_IS_SUBCLASS_INSTANCE(sipPy, String));
+#endif
 
   if (sipPy == Py_None)
   {
@@ -296,9 +318,15 @@ SIP_PYOBJECT __repr__();
 
     return 1;
   }
+#if PY_MAJOR_VERSION < 3
   if (PyString_Check(sipPy))
   {
     *sipCppPtr = new String(PyString_AS_STRING(sipPy));
+#else
+  if (PyUnicode_Check(sipPy))
+  {
+    *sipCppPtr = new String(PyUnicode_AS_UNICODE(sipPy));
+#endif
 
     return 1;
   }

@@ -39,6 +39,10 @@ class Box3
 	tmp += String(sipCpp->getPoint().x) + " ";
 	tmp += String(sipCpp->getPoint().y) + " ";
 	tmp += String(sipCpp->getPoint().z) + ") }";
+#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(tmp.c_str());
+#else
+	sipRes = PyUnicode_FromString(tmp.c_str());
+#endif
 %End
 };

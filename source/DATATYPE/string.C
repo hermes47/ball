@@ -162,6 +162,16 @@ namespace BALL
  	   assign(char_ptr + from, len);
  	 }
 	}
+	
+	String::String(const wchar_t* char_ptr, Index from, Size len)
+ 	 : str_()
+	{
+ 	 validateCharPtrRange_(from, len, char_ptr);
+ 	 if (len > 0)
+ 	 {
+ 	   assign(char_ptr + from, len);
+ 	 }
+	}
 
 	// hand-coded create method
 	void* String::create(bool /* deep */, bool empty) const
@@ -1468,6 +1478,45 @@ namespace BALL
 		}
 
 		Size total_len = (Size)strlen(char_ptr);
+
+    // indices may be given as negative arguments: start from the end
+    // -1 therefore means the to bit.
+    if (from < 0)
+		{
+      from = (Index)total_len + from;
+
+			// if the values are out of bounds - throw an exception
+			// and leave it...
+			if (from < 0)	
+			{
+				throw Exception::IndexUnderflow(__FILE__, __LINE__, from, len);
+			}
+		}
+
+    if (((Size)from > total_len) || ((total_len > 0) && ((Size)from == total_len)))
+		{
+      throw Exception::IndexOverflow(__FILE__, __LINE__, from, len);
+		}
+
+		if (len == EndPos)
+		{
+			len = total_len - from;
+		}
+		
+		if (len > (total_len - from))
+		{
+			throw Exception::IndexOverflow(__FILE__, __LINE__, (Index)len, total_len);
+		}
+ 	}
+
+	void String::validateCharPtrRange_(Index& from, Size& len, const wchar_t* char_ptr)
+	{
+		if (char_ptr == 0)
+		{
+			throw Exception::NullPointer(__FILE__, __LINE__);
+		}
+
+		Size total_len = (Size)wcslen(char_ptr);
 
     // indices may be given as negative arguments: start from the end
     // -1 therefore means the to bit.

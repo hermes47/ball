@@ -88,7 +88,11 @@ class Vector3
   tmp += String(sipCpp->x) + " ";
   tmp += String(sipCpp->y) + " ";
   tmp += String(sipCpp->z) + ")";
+#if PY_MAJOR_VERSION < 3
  	sipRes = PyString_FromString(tmp.c_str());
+#else
+ 	sipRes = PyUnicode_FromString(tmp.c_str());
+#endif
 %End
 
 };
