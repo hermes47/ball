@@ -82,14 +82,11 @@ class System
 
 	SIP_PYOBJECT __str__();
 %MethodCode
-#if PY_MAJOR_VERSION < 3
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	sipRes = PyString_FromString(String(String("System ") + sipCpp->getName() 
 							+ " { " + String(sipCpp->countMolecules()) + " molecules,  " 
 							+ String(sipCpp->countAtoms()) + " atoms }").c_str());
-#else
-	sipRes = PyUnicode_FromString(String(String("System ") + sipCpp->getName() 
-							+ " { " + String(sipCpp->countMolecules()) + " molecules,  " 
-							+ String(sipCpp->countAtoms()) + " atoms }").c_str());
-#endif
 %End
 };

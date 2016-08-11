@@ -63,10 +63,9 @@ class Angle
 
   SIP_PYOBJECT __str__();
 %MethodCode
-#if PY_MAJOR_VERSION < 3
-	sipRes = PyString_FromString(String(sipCpp->toRadian()).c_str());
-#else
-	sipRes = PyUnicode_FromString(String(sipCpp->toRadian()).c_str());
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
 #endif
+	sipRes = PyString_FromString(String(sipCpp->toRadian()).c_str());
 %End
 };

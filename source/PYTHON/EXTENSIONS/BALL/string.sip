@@ -81,6 +81,7 @@ class String
 %TypeHeaderCode
 	#include <BALL/DATATYPE/string.h>
 	#include <BALL/DATATYPE/hashMap.h>
+    #include <iostream>
 	using namespace BALL;
 	using namespace std;
 %End
@@ -113,8 +114,6 @@ class String
   String(const char*, Index) 
 		throw(NullPointer, IndexOverflow, IndexUnderflow);
   String(const char*, Index, Size) 
-		throw(NullPointer, IndexOverflow, IndexUnderflow);
-  String(const wchar_t*, Index, Size) 
 		throw(NullPointer, IndexOverflow, IndexUnderflow);
 
   // String(Size buffer_size, const char* format, ... );
@@ -266,50 +265,44 @@ class String
 
   SIP_PYOBJECT __str__();
 %MethodCode
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	if (sipCpp == 0)
 	{
-#if PY_MAJOR_VERSION < 3
 		sipRes = PyString_FromString("");
-#else
-		sipRes = PyUnicode_FromString("");
-#endif
 	}
 	else
 	{
-#if PY_MAJOR_VERSION < 3
 		sipRes = PyString_FromString(sipCpp->c_str());
-#else
-		sipRes = PyUnicode_FromString(sipCpp->c_str());
-#endif
 	}
 %End
 
 SIP_PYOBJECT __repr__();
 %MethodCode
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	if (sipCpp == 0)
 	{
-#if PY_MAJOR_VERSION < 3
 		sipRes = PyString_FromString("");
-#else
-		sipRes = PyUnicode_FromString("");
-#endif
 	}
 	else
 	{
-#if PY_MAJOR_VERSION < 3
 		sipRes = PyString_FromString(sipCpp->c_str());
-#else
-		sipRes = PyUnicode_FromString(sipCpp->c_str());
-#endif
 	}
 %End
 
 %ConvertToTypeCode
+#if PY_MAJOR_VERSION >= 3
+#define PyString_Check PyBytes_Check
+#define PyString_AS_STRING PyBytes_AS_STRING
+#endif
   if (sipIsErr == NULL)
 #if PY_MAJOR_VERSION < 3
     return (PyString_Check(sipPy) || BALL_IS_SUBCLASS_INSTANCE(sipPy, String));
 #else
-    return (PyUnicode_Check(sipPy) || BALL_IS_SUBCLASS_INSTANCE(sipPy, String));
+    return (PyString_Check(sipPy) || BALL_IS_SUBCLASS_INSTANCE(sipPy, String) || PyUnicode_Check(sipPy));
 #endif
 
   if (sipPy == Py_None)
@@ -318,18 +311,20 @@ SIP_PYOBJECT __repr__();
 
     return 1;
   }
-#if PY_MAJOR_VERSION < 3
   if (PyString_Check(sipPy))
   {
     *sipCppPtr = new String(PyString_AS_STRING(sipPy));
-#else
-  if (PyUnicode_Check(sipPy))
-  {
-    *sipCppPtr = new String(PyUnicode_AS_UNICODE(sipPy));
-#endif
 
     return 1;
   }
+#if PY_MAJOR_VERSION >= 3
+  else if (PyUnicode_Check(sipPy))
+  {
+    PyObject * tmp = PyUnicode_AsASCIIString(sipPy);
+    *sipCppPtr = new String(PyBytes_AS_STRING(tmp));
+    return 1;
+  }
+#endif
 
   *sipCppPtr = BALL_CONVERT_TO_CPP(String);
 

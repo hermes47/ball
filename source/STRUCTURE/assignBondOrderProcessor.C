@@ -331,7 +331,7 @@ namespace BALL
 		timer_.start();
 #endif
 
-#ifdef DEBUG 
+#ifdef DEBUG
 cout << "  OPTIONS:" << endl;
 cout << " \t Algorithm: " <<  options[Option::ALGORITHM] << endl;
 cout << " \t Heuristic: " <<  options[Option::HEURISTIC] << endl;
@@ -900,7 +900,7 @@ cout << "        order " << i << " : " << penalties[i] << endl;
 			{
 
 #ifdef DEBUG_READ
-cout << "getPenaltyClass_ HIT   " << atom->getFullName() << " with index " << atom->getIndex() << " assigned to block: " << j+1 << " : "  << block_definition_[j].first << "  "	<<  block_definition_[j].second << endl;
+cout << "getPenaltyClass_ HIT   " << atom->getFullName() << " with index "  << " assigned to block: " << j+1 << " : "  << block_definition_[j].first << "  "	<<  block_definition_[j].second << endl;
 #endif
 				// NOTE: we start counting at 0!
 				return j;

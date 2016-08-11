@@ -12,24 +12,18 @@
 %End
 
 %ConvertToTypeCode
+#if PY_MAJOR_VERSION >= 3
+#define PyInt_AsLong PyLong_AsLong
+#define PyInt_Check PyLong_Check
+#endif
 	if (sipIsErr == NULL)
 	{
-#if PY_MAJOR_VERSION < 3
 		return PyInt_Check(sipPy);
 	}
 	if (PyInt_Check(sipPy))
-#else
-		return PyLong_Check(sipPy);
-	}
-	if (PyLong_Check(sipPy))
-#endif
 	{
 		*sipCppPtr = new Index;
-#if PY_MAJOR_VERSION < 3
 		**sipCppPtr = PyInt_AsLong(sipPy);
-#else
-		**sipCppPtr = PyLong_AsLong(sipPy);
-#endif
 	
 		return 1;
 	}
@@ -37,17 +31,14 @@
 	return 0;
 %End
 %ConvertFromTypeCode
+#if PY_MAJOR_VERSION >= 3
+#define PyInt_FromLong PyLong_FromLong
+#endif
 	if (sipCpp == NULL)
 	{
-#if PY_MAJOR_VERSION < 3
 		return PyInt_FromLong(0);
 	}
 	return PyInt_FromLong(*sipCpp);
-#else
-		return PyLong_FromLong(0);
-	}
-	return PyLong_FromLong(*sipCpp);
-#endif
 %End
 };
 
@@ -58,24 +49,18 @@
 	using namespace BALL;
 %End
 %ConvertToTypeCode
+#if PY_MAJOR_VERSION >= 3
+#define PyInt_AsLong PyLong_AsLong
+#define PyInt_Check PyLong_Check
+#endif
 	if (sipIsErr == NULL)
 	{
-#if PY_MAJOR_VERSION < 3
 		return PyInt_Check(sipPy);
 	}
 	if (PyInt_Check(sipPy))
-#else
-		return PyLong_Check(sipPy);
-	}
-	if (PyLong_Check(sipPy))
-#endif
 	{
 		*sipCppPtr = new Position;
-#if PY_MAJOR_VERSION < 3
 		**sipCppPtr = PyInt_AsLong(sipPy);
-#else
-		**sipCppPtr = PyLong_AsLong(sipPy);
-#endif
 	
 		return 1;
 	}
@@ -83,17 +68,14 @@
 	return 0;
 %End
 %ConvertFromTypeCode
+#if PY_MAJOR_VERSION >= 3
+#define PyInt_FromLong PyLong_FromLong
+#endif
 	if (sipCpp == NULL)
 	{
-#if PY_MAJOR_VERSION < 3
 		return PyInt_FromLong(0);
 	}
 	return PyInt_FromLong(*sipCpp);
-#else
-		return PyLong_FromLong(0);
-	}
-	return PyLong_FromLong(*sipCpp);
-#endif
 %End
 };
 
@@ -105,24 +87,18 @@
 %End
 
 %ConvertToTypeCode
+#if PY_MAJOR_VERSION >= 3
+#define PyInt_AsLong PyLong_AsLong
+#define PyInt_Check PyLong_Check
+#endif
 	if (sipIsErr == NULL)
 	{
-#if PY_MAJOR_VERSION < 3
 		return PyInt_Check(sipPy);
 	}
 	if (PyInt_Check(sipPy))
-#else
-		return PyLong_Check(sipPy);
-	}
-	if (PyLong_Check(sipPy))
-#endif
 	{
 		*sipCppPtr = new LongIndex;
-#if PY_MAJOR_VERSION < 3
 		**sipCppPtr = PyInt_AsLong(sipPy);
-#else
-		**sipCppPtr = PyLong_AsLong(sipPy);
-#endif
 	
 		return 1;
 	}
@@ -130,17 +106,14 @@
 	return 0;
 %End
 %ConvertFromTypeCode
+#if PY_MAJOR_VERSION >= 3
+#define PyInt_FromLong PyLong_FromLong
+#endif
 	if (sipCpp == NULL)
 	{
-#if PY_MAJOR_VERSION < 3
 		return PyInt_FromLong(0);
 	}
 	return PyInt_FromLong(*sipCpp);
-#else
-		return PyLong_FromLong(0);
-	}
-	return PyLong_FromLong(*sipCpp);
-#endif
 %End
 };
 
@@ -152,24 +125,18 @@
 %End
 
 %ConvertToTypeCode
+#if PY_MAJOR_VERSION >= 3
+#define PyInt_AsLong PyLong_AsLong
+#define PyInt_Check PyLong_Check
+#endif
 	if (sipIsErr == NULL)
 	{
-#if PY_MAJOR_VERSION < 3
 		return PyInt_Check(sipPy);
 	}
 	if (PyInt_Check(sipPy))
-#else
-		return PyLong_Check(sipPy);
-	}
-	if (PyLong_Check(sipPy))
-#endif
 	{
 		*sipCppPtr = new Time;
-#if PY_MAJOR_VERSION < 3
 		**sipCppPtr = PyInt_AsLong(sipPy);
-#else
-		**sipCppPtr = PyLong_AsLong(sipPy);
-#endif
 	
 		return 1;
 	}
@@ -177,17 +144,14 @@
 	return 0;
 %End
 %ConvertFromTypeCode
+#if PY_MAJOR_VERSION >= 3
+#define PyInt_FromLong PyLong_FromLong
+#endif
 	if (sipCpp == NULL)
 	{
-#if PY_MAJOR_VERSION < 3
 		return PyInt_FromLong(0);
 	}
 	return PyInt_FromLong(*sipCpp);
-#else
-		return PyLong_FromLong(0);
-	}
-	return PyLong_FromLong(*sipCpp);
-#endif
 %End
 };
 

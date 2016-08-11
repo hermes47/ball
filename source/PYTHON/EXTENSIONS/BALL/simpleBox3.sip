@@ -44,6 +44,9 @@ class SimpleBox3
 
   SIP_PYOBJECT __str__();
 %MethodCode
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	 static String tmp;
 	 tmp = "SimpleBox3 { (";
 	 tmp += String(sipCpp->a.x) + " ";
@@ -52,10 +55,6 @@ class SimpleBox3
 	 tmp += String(sipCpp->b.x) + " ";
 	 tmp += String(sipCpp->b.y) + " ";
 	 tmp += String(sipCpp->b.z) + ") }";
-#if PY_MAJOR_VERSION < 3
 	 sipRes = PyString_FromString(tmp.c_str());
-#else
-	 sipRes = PyUnicode_FromString(tmp.c_str());
-#endif
 %End
 };

@@ -46,28 +46,22 @@ using namespace BALL;
 	
 	SIP_PYOBJECT __str__();
 %MethodCode
-#if PY_MAJOR_VERSION < 3
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	sipRes = PyString_FromString(String(String("NucleicAcid ") + sipCpp->getName() 
 							+ " { " + String(sipCpp->countNucleotides()) + " nucleotides,  " 
 							+ String(sipCpp->countAtoms()) + " atoms }").c_str());
-#else
-	sipRes = PyUnicode_FromString(String(String("NucleicAcid ") + sipCpp->getName() 
-							+ " { " + String(sipCpp->countNucleotides()) + " nucleotides,  " 
-							+ String(sipCpp->countAtoms()) + " atoms }").c_str());
-#endif
 %End
 	
 	SIP_PYOBJECT __repr__();
 %MethodCode
-#if PY_MAJOR_VERSION < 3
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	sipRes = PyString_FromString(String(String("NucleicAcid ") + sipCpp->getName() 
 							+ " { " + String(sipCpp->countNucleotides()) + " nucleotides,  " 
 							+ String(sipCpp->countAtoms()) + " atoms }").c_str());
-#else
-	sipRes = PyUnicode_FromString(String(String("NucleicAcid ") + sipCpp->getName() 
-							+ " { " + String(sipCpp->countNucleotides()) + " nucleotides,  " 
-							+ String(sipCpp->countAtoms()) + " atoms }").c_str());
-#endif
 %End
 
 };

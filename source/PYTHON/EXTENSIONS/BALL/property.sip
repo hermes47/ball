@@ -38,11 +38,7 @@ class NamedProperty
 %MethodCode
 	if(sipCpp == 0)
 	{
-#if PY_MAJOR_VERSION < 3
 		sipRes = PyString_FromString("");
-#else
-		sipRes = PyUnicode_FromString("");
-#endif
 	}
 	else
 	{
@@ -77,11 +73,7 @@ class NamedProperty
 				output += BALL::String("Smart Object, Value: ") + BALL::String((unsigned long) &*sipCpp->getSmartObject());
 				break;
 		}
-#if PY_MAJOR_VERSION < 3
 		sipRes = PyString_FromString(output.c_str());
-#else
-		sipRes = PyUnicode_FromString(output.c_str());
-#endif
 	}
 %End
 };

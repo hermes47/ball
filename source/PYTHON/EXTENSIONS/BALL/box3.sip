@@ -31,6 +31,9 @@ class Box3
 
   SIP_PYOBJECT __str__();
 %MethodCode
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	static String tmp;
 	tmp = "Box3 { (";
 	tmp += String(sipCpp->getWidth()) + " x ";
@@ -39,10 +42,6 @@ class Box3
 	tmp += String(sipCpp->getPoint().x) + " ";
 	tmp += String(sipCpp->getPoint().y) + " ";
 	tmp += String(sipCpp->getPoint().z) + ") }";
-#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(tmp.c_str());
-#else
-	sipRes = PyUnicode_FromString(tmp.c_str());
-#endif
 %End
 };

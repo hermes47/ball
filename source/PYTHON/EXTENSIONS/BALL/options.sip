@@ -67,14 +67,11 @@ class Options
 
   SIP_PYOBJECT __str__();
 %MethodCode
-#if PY_MAJOR_VERSION < 3
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	sipRes = PyString_FromString(String(String("Options ") + sipCpp->getName()
     			    + " { " + String(sipCpp->getSize()) + " entries }").c_str());
-#else
-	sipRes = PyUnicode_FromString(String(String("Options ") + sipCpp->getName()
-    			    + " { " + String(sipCpp->getSize()) + " entries }").c_str());
-#endif
-
 %End
 
 	

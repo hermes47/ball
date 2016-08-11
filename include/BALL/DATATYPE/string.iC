@@ -1277,26 +1277,6 @@ String& String::assign(size_t n, char c)
 	str_.assign(n, c);
 	return *this;
 }
-BALL_INLINE
-String& String::assign(const wchar_t* s)
-{
-	wstr_.assign(s);
-	return *this;
-}
-
-BALL_INLINE
-String& String::assign(const wchar_t* s, size_t n)
-{
-	wstr_.assign(s, n);
-	return *this;
-}
-
-BALL_INLINE
-String& String::assign(size_t n, wchar_t c)
-{
-	wstr_.assign(n, c);
-	return *this;
-}
 
 template <class InputIterator>
 BALL_INLINE

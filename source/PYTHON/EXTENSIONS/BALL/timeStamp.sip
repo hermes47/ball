@@ -31,6 +31,9 @@ class PreciseTime
 
   SIP_PYOBJECT __str__();
 %MethodCode
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	static char buf[128];
 	time_t secs = sipCpp->getSeconds();
 	strftime(buf, 127, "\045Y\045m\045d\045H\045M\045S", localtime(&secs));
@@ -39,11 +42,7 @@ class PreciseTime
 	String usec_str(sipCpp->getMicroSeconds() / 1.0e6);
 	time_str.append(usec_str.after("."));
 
-#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(time_str.c_str());
-#else
-	sipRes = PyUnicode_FromString(time_str.c_str());
-#endif
 %End
 };
 
@@ -68,6 +67,9 @@ class TimeStamp
 
   SIP_PYOBJECT __str__();
 %MethodCode
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	time_t secs = sipCpp->getTime().getSeconds();
 	static char buf[128];
 	strftime(buf, 127, "\045Y\045m\045d\045H\045M\045S", localtime(&secs));
@@ -76,11 +78,7 @@ class TimeStamp
 	String usec_str(sipCpp->getTime().getMicroSeconds() / 1.0e6);
 	time_str.append(usec_str.after("."));
 
-#if PY_MAJOR_VERSION < 3
 	sipRes = PyString_FromString(time_str.c_str());
-#else
-	sipRes = PyUnicode_FromString(time_str.c_str());
-#endif
 %End
 };
 

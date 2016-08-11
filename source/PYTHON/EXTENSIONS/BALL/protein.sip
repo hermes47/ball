@@ -79,13 +79,11 @@ class Protein
 
   SIP_PYOBJECT __str__();
 %MethodCode
-#if PY_MAJOR_VERSION < 3
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	sipRes = PyString_FromString(String(String("Protein ") + sipCpp->getName() 
 						+ " { " + String(sipCpp->countResidues()) + " residues }").c_str());
-#else
-	sipRes = PyUnicode_FromString(String(String("Protein ") + sipCpp->getName() 
-						+ " { " + String(sipCpp->countResidues()) + " residues }").c_str());
-#endif
 %End
 
 };

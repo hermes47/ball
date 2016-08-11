@@ -39,7 +39,6 @@
 #endif
 
 using std::string;
-using std::wstring;
 
 class QString;
 class QByteArray;
@@ -197,7 +196,6 @@ namespace BALL
 				@exception Exception::NullPointer if <tt>char_ptr == NULL</tt>
 		*/
 		String(const char* char_ptr, Index from = 0, Size len = EndPos);
-		String(const wchar_t* char_ptr, Index from = 0, Size len = EndPos);
 
 		/**	Creates a string using <b>sprintf</b>.
 				This constructor creates a new string and sets its content
@@ -1186,12 +1184,6 @@ namespace BALL
 		///
 		String& assign(size_t n, char c);
 		///
-		String& assign(const wchar_t* s);
-		///
-		String& assign(const wchar_t* s, size_t n);
-		///
-		String& assign(size_t n, wchar_t c);
-		///
 		template <class InputIterator>
 		String& assign(InputIterator first, InputIterator last);
 #ifdef BALL_HAS_INITIALIZER_LISTS
@@ -1395,8 +1387,6 @@ namespace BALL
 		void validateRange_(Index& from, Size& len) const; 
 
 		static void validateCharPtrRange_(Index& from, Size& len, const char* char_ptr);
-
-		static void validateCharPtrRange_(Index& from, Size& len, const wchar_t* char_ptr);
 		
 		static void valudateCharPtrIndex_(Index& index);
 		
@@ -1404,8 +1394,6 @@ namespace BALL
 
 		/// The encapsulated std::string
 		string str_;
-		/// The encapsulated std::wstring
-		wstring wstr_;
 
 		static int compareAscendingly_(const char* a,  const char* b);
 

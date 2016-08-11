@@ -162,24 +162,26 @@ template<FIRSTTYPE, double>
 %End
 
 %ConvertFromTypeCode
+#if PY_MAJOR_VERSION >= 3
+#define PyInt_FromLong PyLong_FromLong
+#endif
     PyObject *t;
 
     // Create the Python list of the correct length.
     if ((t = PyTuple_New(2)) == NULL)
         return NULL;
 
-#if PY_MAJOR_VERSION < 3
 		PyTuple_SET_ITEM(t, 0, PyInt_FromLong(sipCpp->first));
 		PyTuple_SET_ITEM(t, 1, PyInt_FromLong(sipCpp->second));
-#else
-		PyTuple_SET_ITEM(t, 0, PyLong_FromLong(sipCpp->first));
-		PyTuple_SET_ITEM(t, 1, PyLong_FromLong(sipCpp->second));
-#endif
 
     return t;
 %End
 
 %ConvertToTypeCode
+#if PY_MAJOR_VERSION >= 3
+#define PyInt_AsLong PyLong_AsLong
+#define PyNumber_Int PyNumber_Long
+#endif
     // Check if type is compatible
     if (sipIsErr == NULL)
     {
@@ -192,11 +194,7 @@ template<FIRSTTYPE, double>
 		std::pair<Position,Position>* result = 0;
 
 		if(!*sipIsErr) {
-#if PY_MAJOR_VERSION < 3
 			result = new std::pair<Position, Position>(PyInt_AsLong(PyNumber_Int(PyTuple_GET_ITEM(sipPy, 0))), PyInt_AsLong(PyNumber_Int(PyTuple_GET_ITEM(sipPy, 1))));
-#else
-			result = new std::pair<Position, Position>(PyLong_AsLong(PyNumber_Long(PyTuple_GET_ITEM(sipPy, 0))), PyLong_AsLong(PyNumber_Long(PyTuple_GET_ITEM(sipPy, 1))));
-#endif
 		}
 
 

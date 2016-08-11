@@ -38,18 +38,13 @@ class AminoAcidDescriptor
 	   
   SIP_PYOBJECT __str__();
 %MethodCode
-#if PY_MAJOR_VERSION < 3
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	sipRes = PyString_FromString((String("{ ") + sipCpp->getType() + " " + 
 			String(sipCpp->getPhi().toDegree()) + " " + 
 			String(sipCpp->getPsi().toDegree()) + " " + 
 			String(sipCpp->getOmega().toDegree()) + " }").c_str());
-#else
-
-	sipRes = PyUnicode_FromString((String("{ ") + sipCpp->getType() + " " + 
-			String(sipCpp->getPhi().toDegree()) + " " + 
-			String(sipCpp->getPsi().toDegree()) + " " + 
-			String(sipCpp->getOmega().toDegree()) + " }").c_str());
-#endif
 %End
 };
 

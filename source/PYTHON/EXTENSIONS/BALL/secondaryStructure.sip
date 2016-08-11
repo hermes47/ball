@@ -74,25 +74,20 @@ class SecondaryStructure
 
   SIP_PYOBJECT __str__();
 %MethodCode
-#if PY_MAJOR_VERSION < 3
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	return PyString_FromString(String(String("SecondaryStructure ") + sipCpp->getName() 
 						+ " { " + String(sipCpp->countResidues()) + " residues }").c_str());
-#else
-	return PyUnicode_FromString(String(String("SecondaryStructure ") + sipCpp->getName() 
-						+ " { " + String(sipCpp->countResidues()) + " residues }").c_str());
-#endif
 %End
 
   SIP_PYOBJECT __repr__();
 %MethodCode
-#if PY_MAJOR_VERSION < 3
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString PyUnicode_FromString
+#endif
 	return PyString_FromString(String(String("SecondaryStructure ") + sipCpp->getName() 
 						+ " { " + String(sipCpp->countResidues()) + " residues }").c_str());
-#else
-	return PyUnicode_FromString(String(String("SecondaryStructure ") + sipCpp->getName() 
-						+ " { " + String(sipCpp->countResidues()) + " residues }").c_str());
-#endif
-
 %End
 
 };
